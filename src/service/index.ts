@@ -1,14 +1,14 @@
 // service统一出口
 import WCRequest from './request'
 import { BASE_URL, TIME_OUT } from './request/config'
-
-const hyRequest = new WCRequest({
+import localCache from '@/utils/cache'
+const wcRequest = new WCRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
   interceptors: {
     requestInterceptor: (config) => {
       // 携带token的拦截
-      const token = ''
+      const token = localCache.getCache('token')
       if (token) {
         if (config && config.headers) {
           // 多一步判断
@@ -34,4 +34,4 @@ const hyRequest = new WCRequest({
   }
 })
 
-export default hyRequest
+export default wcRequest
